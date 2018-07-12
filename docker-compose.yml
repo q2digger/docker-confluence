@@ -1,0 +1,41 @@
+version: '2'
+services:
+  confluence:
+    image: q2digger/confluence:latest
+    container_name: confluence
+    hostname: confluence
+    volumes:
+      - app_data:/var/atlassian/application-data/confluence
+    restart: always
+    ports:
+      - 8090:8090
+      - 8091:8091
+    environment:
+      JVM_MINIMUM_MEMORY: '2048m'
+      JVM_MAXIMUM_MEMORY: '4096m'
+      CATALINA_CONNECTOR_PROXYNAME: '192.168.109.13'
+      CATALINA_CONNECTOR_PROXYPORT: '80'
+      CATALINA_CONNECTOR_SCHEME: 'http'
+  nginx:
+    build: ../nginx/
+    ports:
+      - 80:80
+    restart: always
+    container_name: nginx
+    hostname: nginx
+  mysql:
+    build: ../mysql/
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    container_name: mysql
+    hostname: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Str0ngPazz11'
+      MYSQL_DATABASE: 'confluence'
+      MYSQL_USER: 'atlassian'
+      MYSQL_PASSWORD: 'password'
+
+volumes:
+  db_data:
+  app_data:
