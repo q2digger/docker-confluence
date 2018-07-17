@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   confluence:
     image: q2digger/confluence:latest
@@ -10,32 +11,42 @@ services:
     ports:
       - 8090:8090
       - 8091:8091
+    networks:
+      - confluence
+      - proxy
     environment:
       JVM_MINIMUM_MEMORY: '2048m'
       JVM_MAXIMUM_MEMORY: '4096m'
-      CATALINA_CONNECTOR_PROXYNAME: '192.168.109.13'
-      CATALINA_CONNECTOR_PROXYPORT: '80'
-      CATALINA_CONNECTOR_SCHEME: 'http'
-  nginx:
-    build: ../nginx/
+      CATALINA_CONNECTOR_PROXYNAME: 'confluence.local.net'
+      CATALINA_CONNECTOR_PROXYPORT: '443'
+      CATALINA_CONNECTOR_SCHEME: 'https'
+      VIRTUAL_HOST: 'confluence.local.net'
+      VIRTUAL_PORT: '8090'
+  proxy:
+    image: jwilder/nginx-proxy
     ports:
-      - 80:80
-    restart: always
-    container_name: nginx
-    hostname: nginx
-  mysql:
-    build: ../mysql/
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
     volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    container_name: mysql
-    hostname: mysql
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./certs/:/etc/nginx/certs:ro
+    networks:
+      - proxy
+  database:
+    image: atlassian/postgres:9.4
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - confluence
     environment:
-      MYSQL_ROOT_PASSWORD: 'Str0ngPazz11'
-      MYSQL_DATABASE: 'confluence'
-      MYSQL_USER: 'atlassian'
-      MYSQL_PASSWORD: 'password'
+      - DB_PASS=atlassian
+      - DB_NAME=confluence
+      - DB_USER=atlassian
 
 volumes:
   db_data:
   app_data:
+
+networks:
+  confluence:
+  proxy:
