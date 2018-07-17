@@ -30,7 +30,7 @@ RUN apt-get update --quiet \
 
 COPY entrypoint.sh              /entrypoint.sh
 
-ARG CONFLUENCE_VERSION=6.9.3
+ARG CONFLUENCE_VERSION=6.10.1
 ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
 	
 COPY . /tmp
