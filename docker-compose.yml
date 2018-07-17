@@ -28,6 +28,7 @@ services:
       - 0.0.0.0:80:80
       - 0.0.0.0:443:443
     volumes:
+      - ./confluence.local.net.conf:/etc/nginx/vhost.d/confluence.local.net:ro
       - /var/run/docker.sock:/tmp/docker.sock
       - ./certs/:/etc/nginx/certs:ro
     networks:
