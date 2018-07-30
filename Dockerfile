@@ -7,6 +7,8 @@ ENV RUN_GROUP           daemon
 ENV CONFLUENCE_HOME          /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 
+ENV CONF_VERSION 6.10.1
+
 VOLUME ["${CONFLUENCE_HOME}"]
 
 # Expose HTTP and Synchrony ports
@@ -30,8 +32,7 @@ RUN apt-get update --quiet \
 
 COPY entrypoint.sh              /entrypoint.sh
 
-ARG CONFLUENCE_VERSION=6.10.1
-ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
+ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz
 	
 COPY . /tmp
 COPY ./ssl/sslinstall.sh /sslinstall.sh
