@@ -36,7 +36,7 @@ services:
   database:
     image: postgres:9.4
     volumes:
-      - _jiradb:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=atlassian
       - POSTGRES_DB=confluence
