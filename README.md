@@ -4,8 +4,7 @@ Confluence Server is where you create, organise and discuss work with your team.
  
 Learn more about Confluence Server: <https://www.atlassian.com/software/confluence>
 
-You can find the repository for this Dockerfile at <https://hub.docker.com/r/atlassian/confluence-server>
- 
+
 # Overview
  
 This Docker container makes it easy to get an instance of Confluence up and running.
@@ -97,31 +96,3 @@ Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Con
  
 Read more about data recovery and backups: [Site Backup and Restore](https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore)
  
-# Versioning
- 
-The `latest` tag matches the most recent release of Atlassian Confluence Server.
-So `atlassian/confluence-server:latest` will use the newest stable version of Confluence Server available.
- 
-Alternatively, you can use a specific minor version of Confluence Server by using a version number
-tag: `atlassian/confluence-server:5.10`. This will install the latest `5.10.x` version that
-is available.
-
-For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).  
- 
-# Known Problems
-In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
-     Error writing state to confluence.cfg.xml
-com.atlassian.config.ConfigurationException: Couldn't save confluence.cfg.xml to /var/atlassian/confluence-home directory.
-
-See https://github.com/docker/docker/issues/4023 for details.
-
-To work around this issue, use a different host operating system other than Mac OSX until a newer release of Docker fixes this issue.
- 
-# Support
-
-This Docker image is great for evaluating Confluence, however it does use OpenJDK which is not supported for running Confluence in production. 
-
-To meet our supported platform requirements, you'll need to build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info. 
-
-For product support go to [support.atlassian.com](http://support.atlassian.com).  
-
