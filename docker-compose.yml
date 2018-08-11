@@ -34,15 +34,18 @@ services:
     networks:
       - proxy
   database:
-    image: atlassian/postgres:9.4
+    image: blacklabelops/postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=atlassian
+      - POSTGRES_DB=confluence
+      - POSTGRES_USER=atlassian
+      - POSTGRES_ENCODING=UNICODE
+      - POSTGRES_COLLATE=C
+      - POSTGRES_COLLATE_TYPE=C
     networks:
       - confluence
-    environment:
-      - DB_PASS=atlassian
-      - DB_NAME=confluence
-      - DB_USER=atlassian
 
 volumes:
   db_data:
