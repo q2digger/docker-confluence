@@ -36,7 +36,7 @@ echo "Preparing branch for version new Atlassian Confluence version"
 # Edit the Dockerfile by changing the current version to the new obtained
 # version from the Atlassian Confluence version feed.
 sed --in-place \
-    --expression "s/ENV CONF_VERSION  ${CURRENT_VERSION}/ENV CONF_VERSION  ${VERSION}/g" \
+    --expression "s/ENV CONF_VERSION ${CURRENT_VERSION}/ENV CONF_VERSION ${VERSION}/g" \
     Dockerfile
 
 echo "Ready for acceptance testing"
