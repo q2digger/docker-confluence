@@ -16,7 +16,7 @@ For the directory in the environmental variable `CONFLUENCE_HOME` that is used t
  
 Start Atlassian Confluence Server:
  
-    $> docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+    $> docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 q2digger/confluence:latest
  
 
 **Success**. Confluence is now available on [http://localhost:8090](http://localhost:8090)*
@@ -70,7 +70,7 @@ If you need to pass additional JVM arguments to Confluence such as specifying a 
    
 Example:
 
-    $> docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+    $> docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 q2digger/confluence
 
  
 # Upgrade
