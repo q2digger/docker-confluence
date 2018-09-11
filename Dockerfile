@@ -42,3 +42,4 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && sed -i -e 's/port="8090"/port="8090" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' ${CONFLUENCE_INSTALL_DIR}/conf/server.xml
 
 COPY ./ssl/   /ssl/
+
