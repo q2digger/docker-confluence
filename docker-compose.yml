@@ -1,0 +1,56 @@
+version: '2'
+
+services:
+  confluence:
+    image: q2digger/confluence:latest
+    container_name: confluence
+    hostname: confluence
+    volumes:
+      - app_data:/var/atlassian/application-data/confluence
+    restart: always
+    ports:
+      - 8090:8090
+      - 8091:8091
+    networks:
+      - confluence
+      - proxy
+    environment:
+      JVM_MINIMUM_MEMORY: '2048m'
+      JVM_MAXIMUM_MEMORY: '4096m'
+      CATALINA_CONNECTOR_PROXYNAME: 'confluence.local.net'
+      CATALINA_CONNECTOR_PROXYPORT: '443'
+      CATALINA_CONNECTOR_SCHEME: 'https'
+      VIRTUAL_HOST: 'confluence.local.net'
+      VIRTUAL_PORT: '8090'
+  proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    volumes:
+      - ./confluence.local.net.conf:/etc/nginx/vhost.d/confluence.local.net:ro
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./certs/:/etc/nginx/certs:ro
+    networks:
+      - proxy
+  database:
+    image: blacklabelops/postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=atlassian
+      - POSTGRES_DB=confluence
+      - POSTGRES_USER=atlassian
+      - POSTGRES_ENCODING=UNICODE
+      - POSTGRES_COLLATE=C
+      - POSTGRES_COLLATE_TYPE=C
+    networks:
+      - confluence
+
+volumes:
+  db_data:
+  app_data:
+
+networks:
+  confluence:
+  proxy:
