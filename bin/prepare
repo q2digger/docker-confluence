@@ -23,12 +23,18 @@ CURRENT_VERSION=$(sed -nr 's/ENV CONF_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
 # feed information to get a JSONP formatted response, strip the output to
 # retrieve the actual content and then get the version number from the first
 # entry.
-VERSION=${1:-"$(curl -Ls 'https://my.atlassian.com/download/feeds/current/confluence.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')"}
+
+curl -Ls 'https://my.atlassian.com/download/feeds/current/confluence.json' \
+    | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[] | select(.description | test("TAR\\.GZ Archive")) | ("" + .zipUrl + " " + .version + " " + .releaseNotes)' \
+    | while read -r URL VERSION NOTES
+do
 
 # Outputs the version information
 echo "Found versions:"
 echo "  Current: ${CURRENT_VERSION}"
 echo "  Latest:  ${VERSION}"
+echo "  Url:     ${URL}"
+echo "  Notes:   ${NOTES}"
 echo ""
 
 echo "Preparing branch for version new Atlassian Confluence version"
@@ -40,3 +46,5 @@ sed --in-place \
     Dockerfile
 
 echo "Ready for acceptance testing"
+
+done
