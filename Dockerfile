@@ -7,7 +7,7 @@ ENV RUN_GROUP           daemon
 ENV CONFLUENCE_HOME          /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 
-ENV CONF_VERSION 6.15.2
+ENV CONF_VERSION 6.6.13
 
 VOLUME ["${CONFLUENCE_HOME}"]
 
@@ -35,7 +35,7 @@ COPY ./ssl/sslinstall.sh /sslinstall.sh
 RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && mkdir -p /ssl \
     && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$CONFLUENCE_INSTALL_DIR" \
-    && curl -L --silent                  "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
+    && curl -L --silent                  "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.47/mysql-connector-java-5.1.47-bin.jar" \
     && curl -L --silent                  "https://jdbc.postgresql.org/download/postgresql-42.2.1.jar" -o "${CONFLUENCE_INSTALL_DIR}/lib/postgresql-42.2.1.jar" \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/ \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh \
