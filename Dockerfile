@@ -37,6 +37,7 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$CONFLUENCE_INSTALL_DIR" \
     && curl -L --silent                  "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && curl -L --silent                  "https://jdbc.postgresql.org/download/postgresql-42.2.1.jar" -o "${CONFLUENCE_INSTALL_DIR}/lib/postgresql-42.2.1.jar" \
+    && mkdir -p ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
     && chown -R root:root ${CONFLUENCE_INSTALL_DIR}/ \
     && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
     && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
