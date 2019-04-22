@@ -37,10 +37,16 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$CONFLUENCE_INSTALL_DIR" \
     && curl -L --silent                  "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && curl -L --silent                  "https://jdbc.postgresql.org/download/postgresql-42.2.1.jar" -o "${CONFLUENCE_INSTALL_DIR}/lib/postgresql-42.2.1.jar" \
-    && mkdir -p ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
+    && mkdir -p ${CONFLUENCE_INSTALL_DIR}/logs \
+    && mkdir -p ${CONFLUENCE_INSTALL_DIR}/temp \
+    && mkdir -p ${CONFLUENCE_INSTALL_DIR}/work \
     && chown -R root:root ${CONFLUENCE_INSTALL_DIR}/ \
-    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
-    && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/{logs,temp,work} \
+    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/logs \
+    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/temo \
+    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/work \
+    && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/logs \
+    && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/temp \
+    && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/work \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh \
     && sed -i -e 's/port="8090"/port="8090" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' ${CONFLUENCE_INSTALL_DIR}/conf/server.xml
 
