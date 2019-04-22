@@ -42,7 +42,7 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && mkdir -p ${CONFLUENCE_INSTALL_DIR}/work \
     && chown -R root:root ${CONFLUENCE_INSTALL_DIR}/ \
     && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/logs \
-    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/temo \
+    && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/temp \
     && chown -R ${RUN_USER}:root ${CONFLUENCE_INSTALL_DIR}/work \
     && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/logs \
     && chmod -R 0700 ${CONFLUENCE_INSTALL_DIR}/temp \
