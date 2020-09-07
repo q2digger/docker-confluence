@@ -1,4 +1,4 @@
-FROM anapsix/alpine-java:8_server-jre
+FROM openjdk:8-jre-alpine3.8
 
 ENV RUN_USER            daemon
 ENV RUN_GROUP           daemon
