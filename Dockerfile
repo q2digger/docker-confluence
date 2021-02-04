@@ -7,7 +7,7 @@ ENV RUN_GROUP           daemon
 ENV CONFLUENCE_HOME          /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 
-ENV CONF_VERSION 7.4.7
+ENV CONF_VERSION 7.6.3
 
 VOLUME ["${CONFLUENCE_HOME}"]
 
